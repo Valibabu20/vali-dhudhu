@@ -1,0 +1,673 @@
+JSP (Java Server Pages) 
+---
+-> jsp is an api given by sun microsystems to develop dynamic web applications.
+
+-> both servlet and jsp are used to develop dynamic web applications.
+
+advantages of jsp over servlet :
+------------------------------
+1. jsp improves the productivity of the web application.
+
+2. to develop jsp we use tags which are called as jsp elements.
+
+3. using jsp we can seperate presentation logic from business logic.
+
+disadvantage of jsp :
+-------------------
+1. jsp takes more time compare to servlet when the client sends the request
+   to access the jsp for the first time.
+
+--> as jsp takes time when client sends the request for the first time 
+    which is in seconds so we dont consider this as disadvantage and if 
+    we want we can resolve this by using <load-on-startup> tag.
+
+--> every jsp must ends with .jsp extension.
+
+--> we have to place the jsp inside the project directory and outside the
+    WEB-INF directory.
+
+--> as jsp is placed outside the WEB-INF directory thats why we no need to 
+    configure the jsp in web.xml, a client can access the jsp directly by
+    the jsp name.
+
+--> to develop the jsp we no need to restart the server, if server is already
+    running meanwhile we can develop and place the jsp inside the web application 
+    directory.
+
+--> jsp takes more time only for the first time but jsp will not take more
+    time when client sends request second time onwards.
+
+-----------------------------------------------------------------------------------------------------
+--> in apache tomcat server we have a cache directory called as "work".
+
+--> we can find auto translated servlet in work directory of apache tomcat
+    server.
+
+Note:
+--> servlet container translates the jsp into a servlet internally and that 
+    servlet is called as auto translated servlet.
+
+--> inside auto translated servlet, servlet container creates jsp life cycle
+    methods as _jspInit(), _jspService() and _jspDestroy().
+
+--> a jsp is a servlet.
+
+--> _jspInit() method is like init() method of servlet, _jspService() method
+    is like service() method of servlet and _jspDestroy() method is like 
+    destroy() method of servlet.
+ 
+-----------------------------------------------------------------------------------
+--> To develop the jsp we have to use jsp elements.
+
+--> Jsp elements are like tags.
+
+jsp elements :
+------------
+--> there are 8 jsp elements 
+
+1. template text
+2. scriplet
+3. jsp declaration
+4. jsp expression
+5. jsp directives
+6. jsp action tags
+7. jsp custom tags
+8. EL-expression (expression language expression)
+
+Template Text :
+-------------
+--> It is a jsp element.
+
+--> In jsp everything which is not jsp element is called as template text.
+
+--> Template text is sent or displayed directly to the client (browser).
+
+Note:
+--> at the time of translating the jsp into auto translated servlet, servlet
+    container converts template text into some java code and places that java 
+    code inside _jspService() method of auto translated servlet.
+
+--> template text is converted into out.println() (java code).
+
+--------------------------------
+this is line-1<br/>    --->   template text
+
+this is line-2<br/>    --->   template text
+
+this is line-3         --->   template text
+--------one.jsp-----------------
+
+Note:
+--> writing anything in jsp means writing in auto translated servlet.
+
+Scriplet :
+--------
+--> scriplet is a jsp element and scriplet is used to write java code in jsp.
+
+syntax:
+  <%
+     //java code
+  %>
+
+Note:
+--> at the time of translating the jsp into auto translated servlet, servlet 
+    container takes the java code from scriplet and places inside _jspService()
+    method of auto translated servlet.
+
+--> scriplet code is local code because it is placed inside _jspService() method.
+
+------------------------------------------------------------------------------------------
+Jsp Implicit Objects : (Jsp Implicit Variables)
+--------------------
+--> At the time of translating the jsp into auto translated servlet, servlet
+    container creates some objects inside the _jspService() method of auto 
+    translated servlet such objects are called as jsp implicit objects.
+
+--> There are total 9 jsp implicit objects 
+
+1. request
+2. response
+3. out
+4. session
+5. config
+6. application
+7. page
+8. pageContext
+9. exception  (it is not created by default in jsp)
+
+note: All the 9 jsp implicit objects we can use directly inside the jsp 
+      without declaration.
+
+1. request :
+   -------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+           request --> javax.servlet.http.HttpServletRequest
+
+--> request is an object of HttpServletRequest.
+
+requirement-1: develop the jsp to display context root or context path, url,
+               uri, http method, protocol, request headers information to
+               the client.
+
+requirement-2: develop the html form and jsp, capture the form data in jsp and
+               display to the client. 
+
+2. response :
+   --------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+              response --> javax.servlet.http.HttpServletResponse
+
+--> response is an object of HttpServletResponse.
+
+Requirement: develop the jsp to send error response to the client with some 
+             status code and status message.
+
+3. out :
+   ---
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+        out --> javax.servlet.jsp.JspWriter
+
+--> out is an object of JspWriter class.
+------------------------------------------------------------------------------
+--> jsp is an api released by sun microsystems in the form of one package.
+
+    1. javax.servlet.jsp
+
+javax.servlet.jsp
+|- JspWriter: it is a class.
+
+--> JspWriter is same as PrintWriter class but JspWriter has an internal
+    buffer whose size is 8kb.
+------------------------------------------------------------------------------         
+4. session :
+   -------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+   
+           session --> javax.servlet.http.HttpSession
+
+--> session is an object of HttpSession.
+
+--> by default in jsp session object is created.
+
+--> if we want to tell servlet container at the time of translating the jsp
+    into a servlet dont create the session object in auto translated servlet
+    then use : <%@page session="false"%>.
+
+5. application :
+   -----------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+          application --> javax.servlet.ServletContext
+
+--> application is an object of ServletContext.
+
+--> as ServletContext object is created and available inside the web server so
+    using ServletContext object we can get the information of the web server
+    and what is available in the web server.
+
+6. config :
+   ------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+         config --> javax.servlet.ServletConfig
+
+--> using ServletConfig object we can get ServletContext object, servlet name
+    and we can store data into ServletConfig object using <init-param> tag.
+
+7. page :
+   ----
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+             page --> java.lang.Object
+
+--> page is a synonym for this keyword.
+
+--> this keyword represent current class object so page is a synonym for this 
+    keyword which holds current class object i.e., auto translated servlet 
+    object.
+
+8. pageContext :
+   -----------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+          pageContext --> javax.servlet.jsp.PageContext
+
+--> pageContext is an object of PageContext.
+
+--> pageContext object represents the entire jsp page.
+
+--> using pageContext object we can get other implicit objects of jsp.
+
+--> using pageContext object we can store the data into the scope variables.
+
+9. exception :
+   ---------
+--> it is an implicit object of jsp and it can be used directly inside the
+    jsp without declaration.
+
+            exception --> java.lang.Throwable
+
+--> exception is an object of Throwable.
+
+--> by default in jsp exception implicit object will not be created, servlet
+    container creates exception implicit object in jsp in case of error page.
+------------------------------------------------------------------------------------------
+
+Jsp declaration :
+---------------
+--> Jsp declaration is a jsp element and it is used to write instance variables, 
+    static variables, instance methods and static methods in the jsp.
+
+syntax:
+  <%!
+     //instance variables
+     //static variables
+     //instance methods
+     //static methods
+  %>
+
+Note:
+--> at the time of translating the jsp into a servlet, sevlet container 
+    takes the code from jsp declaration and places in auto translated 
+    servlet class directly.
+
+--> servlet container calls only jsp life cycle methods i.e., _jspInit(),
+    _jspService() and _jspDestroy() but servlet container will not call
+    userdefined methods.
+
+--> if we want servlet container to call userdefined methods then we have
+    to call userdefined methods from _jspService() method using scriplet
+    in jsp.
+
+Note:
+--> We cannot access jsp implicit objects in jsp declaration.
+
+--> We can access jsp implicit objects in scriplet.
+
+-----------------------------------------------------------------------------------
+Jsp Expression :
+--------------
+--> Jsp expression is a jsp element and jsp expression simplifies
+    the use of java expression.
+
+syntax: <%=java-expression%>
+
+what is java expression?
+i. displaying the value of the variable to the client is called as
+   java expression.
+
+ii. performing arithmetic operations, relational operations and 
+    displaying the result to the client is called java expression.
+
+iii. creating the object and displaying the object to the client is 
+     called as java expression.
+
+iv. calling the method on an object and displaying the return value 
+    of the method to the client is called as java expression.
+
+Note:
+--> servlet container converts jsp expression into out.println() internally.
+
+Jsp directives :
+--------------
+--> Jsp directives is jsp element and jsp directives are used to give 
+    some instruction to servlet container and based on the instruction 
+    servlet container translates the jsp into auto translated servlet.
+
+--> There are 3 jsp directives 
+
+i. page 
+ii. include
+iii. taglib
+
+syntax: <%@directive-name attributes%>
+
+page : (jsp page directive)
+----
+syntax: <%@page attributes%>
+
+attributes of jsp page directive
+-------------------------------- 
+i. import
+ii. errorPage
+iii. isErrorPage
+iv. isELIgnored
+
+Exception Hanling in jsp :
+------------------------
+--> to handle exception in jsp we use isErrorPage and errorPage 
+    attributes of jsp page directive.
+
+Note:
+--> in jsp all exceptions are displayed at client side.
+ 
+--> a jsp which contains error message is called as error page 
+    and in all error pages we have to create exception implicit
+    object to hold exception object using isErrorPage attribute 
+    of page directive.
+
+jsp include directive :
+---------------------
+--> it is used to include the contents of one jsp into another jsp.
+
+syntax: <%@include attribute%>
+
+attribute of include directive :
+------------------------------
+i. file
+
+RequestDispatcher :
+-----------------
+--> RequestDispatcher is an object and it is used to dispatch the request
+    from one resource to another resource.
+
+--> the resource can be a servlet or jsp or html.
+
+--> we can dispatch the request from servlet to servlet, servlet to jsp, 
+    servlet to html, jsp to jsp and jsp to html.
+
+javax.servlet
+|- RequestDispatcher (I)
+   |- void include(ServletRequest req, ServletResponse resp)
+   |- void forward(ServletRequest req, ServletResponse resp)
+
+javax.servlet.http
+|- HttpServletRequest
+   |- public RequestDispatcher getRequestDispatcher(String path)
+
+RequestDispatcher rd = request.getRequestDispatcher("resource url");
+
+calling servlet 
+---------------
+--> a servlet which calls other servlet is called as calling servlet.
+
+called servlet
+--------------
+--> a servlet which is called by calling servlet is called servlet.
+
+note:
+--> include() method of RequestDispatcher includes the output of calling servlet 
+    and called servlet and send to the client.
+
+--> forward() method of RequestDispatcher includes the output of only called 
+    servlet and send to the client.
+
+requirement-1: forward the request from one servlet to another servlet.
+
+requirement-2: forward the request from servlet to jsp.
+
+requirement-3: forward the request from jsp to jsp.
+
+requirement-4: forward the request from jsp to html.
+
+Java Beans :
+----------
+what is a java bean?
+--> java bean is a reusable software component.
+
+--> java bean is a class which is developed using some rules 
+    which are given by sun microsystems.
+
+--> java bean is a class whose object holds data.
+
+rules for java bean
+-------------------
+rule-1: java bean should implement Serializable marker interface.
+
+rule-2: all the variables of java bean must be declared as private.
+
+rule-3: a java bean should have a zero parameterized constructor.
+
+rule-4: a java bean should have setters and getters.
+
+ex: public class EmployeeBean implements Serializable
+    {
+       private int id;
+       private String name;
+       private double price;
+
+       public Employee() {
+       }
+
+       public void setId(int id) {
+         this.id = id;
+       }
+    
+       public int getId() {
+         return id;
+       }
+
+       public void setName(String name) {
+         this.name = name;
+       }
+
+       public String getName() {
+         return name;
+       }
+
+       public void setSalary(double salary) {
+         this.salary = salary;
+       }
+
+       public double getSalary() {
+         return salary;
+       }
+    }
+
+types of logics :
+---------------
+1. business logic
+2. presentation logic
+3. persistence logic (data access logic)
+
+--> the logic which is written to satisfy the business rules given by the
+    business client is called as business logic. 
+
+ex: addition of two numbers, calculating interest, calculating discount etc.
+
+--> the logic which is written to display the output to the client is 
+    called as presentation logic.
+
+    ex: html, out.println() 
+
+--> the logic which is written to interact with the database server is 
+    called as persistence logic or data access logic.
+
+    ex: jdbc code, hibernate code
+
+Note:
+--> It is always recommended to seperate business logic, presentation 
+    logic and persistence logic because maintenance of the application 
+    becomes easy.
+
+--> Whenever we develop the web application, it is recommended to use
+    minimum 3 components.
+
+     1. Controller Component  (servlet)
+     2. Model Component  (Java bean)
+     3. View Component  (html or jsp)
+
+--> Controller component is responsible to receive the request from client 
+    (browser), captures the request data, creates model object, calls methods 
+    of model object and dispatch the request to view component.
+
+--> Model component is used to hold the state (data).
+
+--> View component is responsible to display output to the client (browser).
+
+Note:
+--> in web applications, servlet acts as controller component, jsp or html
+    acts as view component and java bean acts as model component.
+
+scope variables : 
+---------------
+--> the availability of an object from one place of the application is 
+    called as the scope of that object.
+
+--> scope variables are objects.
+
+--> in jsp we have 4 scope variables and every scope variable has
+    different scope.
+
+    1. page scope
+    2. request scope
+    3. session scope
+    4. application scope
+
+--> all scope variables are objects in jsp and servlet.
+
+--> in servlet we have 3 scope variables 
+
+    1. request scope
+    2. session scope
+    3. application scope
+
+--> we can store the data in scope variables.
+
+page scope :
+----------
+--> if we store the data in page scope then we can access that data in the
+    same page (jsp).
+
+request scope :
+-------------
+--> if we store the data in request scope then we can access the data in 
+    all the pages which are served with same request.
+
+request (data-1) --> one.jsp  -->  dispatch request (data-1) --> two.jsp
+
+session scope : 
+-------------
+--> if we store the data into session scope then we can access the data in
+    all the pages which are belonged to the session.
+
+logged in 
+  |
+ session object is created (data-1)
+
+ one.jsp, two.jsp, three.jsp  (data-1)
+
+logged out
+  |
+session object is removed
+
+application scope :
+-----------------
+--> if we store the data into application scope then all the servlets and 
+    jsp of the application can access the data until the project is unde-
+    ployed.
+
+Note:
+--> we can store the data in scope variables.
+
+--> to store the data in scope variables we use setAttribute(String name, Object value).
+
+--> to remove the data from scope variables we use removeAttribute(String name).
+
+--> to get or access the data from scope variables we use getAttribute(String name).
+
+public void setAttribute(String name, Object value)
+public Object getAttribute(String name)
+public void removeAttribute(String name)
+
+jsp action tags :
+---------------
+--> in web applications jsp acts as view component and jsp is used to 
+    write presentation logic so it is not recommended to write java code 
+    in jsp.
+
+--> it is always recommended to remove java code from jsp.
+
+--> we use scriplet and jsp declaration to write java code in jsp so it is
+    never recommended to use scriplet and jsp declaration.
+
+--> to remove java code from jsp we use jsp action tags.
+
+the following are the jsp action tags
+-------------------------------------
+i. <jsp:include>
+ii. <jsp:forward>
+iii. <jsp:setProperty>
+iv. <jsp:getProperty>
+iv. <jsp:useBean>
+
+Note:
+--> <jsp:include> and <jsp:forward> action tags are same as RequestDispatcher's
+    include() and forward() methods.
+
+--> using jsp action tags we cannot remove complete java code from jsp, to remove
+    complete java code from jsp we have to use jsp custom tags.
+
+--> using jsp custom tags we can remove complete java code from jsp.
+
+jsp custom tags : creating our own userdefined tags to remove java code
+---------------   from jsp are called as jsp custom tags.
+
+--> instead of creating our own userdefined tags to remove complete java code
+    from jsp already apache software foundation (ASF) organisation has created 
+    custom tags which are used frequently in web applications and ASF given 
+    custom tags in the form jstl tag library.
+
+what is jstl?
+--> jstl stands for jsp standard tag library and jstl is a tag library which 
+    contains several tags, which are used to remove java code completely from
+    jsp and jstl tag library is developed by apache software foundation orga-
+    nisation.
+
+--> jstl has 5 tag libraries
+
+    1. jstl core tag library
+    2. jstl xml tag library
+    3. jstl format tag library
+    4. jstl sql tag library
+    5. jstl function tag library
+
+--> the most important jstl tag library is jstl core tag library.
+
+--> for every tag library apache software foundation has given one uri 
+    and prefix.
+
+procedure to use jstl tag library :
+---------------------------------
+step-1: download the jstl jars
+step-2: place the jstl jars in the project lib directory
+step-3: import the jstl tag library in the jsp using taglib directive.
+step-4: type control space to see and use the jstl tags
+
+--> javax.servlet.jsp.jstl-1.2.1.jar
+--> javax.servlet.jsp.jstl-api-1.2.1.jar
+
+jsp taglib directive : it is used to import the tag library in jsp.
+--------------------
+ syntax: <%@taglib uri="" prefix=""%>
+
+Note:
+--> It is never recommended to use jstl tags to display static contents, 
+    it is always recommended to use jstl tags to display dynamic contents
+    and to work with dynamic contents we have to use EL-Expression in jstl.
+
+EL-Expression (Expression Language Expression)
+-------------
+--> it is a jsp element and it is used to deal with the scope variables.
+
+--> if a value is available in a scope variable, if we want to read the 
+    value from scope variable and display to client we use EL-Expression.
+
+syntax: ${expression}
+
+jsp
+|- scope variables
+   |- 1. page 2. request 3. session 4. application
+
+MVC Architecture
